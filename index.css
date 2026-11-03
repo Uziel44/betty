@@ -1,0 +1,686 @@
+/* ==========================================================================
+   BETTY · TEJIDOS EN TELAR
+   Hoja de estilos única.
+
+   ORGANIZACIÓN DEL ARCHIVO
+   1.  Variables (paleta tierra)
+   2.  Reset y base
+   3.  Utilidades y componentes compartidos
+   4.  Header y navegación
+   5.  Hero
+   6.  Las piezas
+   7.  El telar          ← única sección oscura, la más importante
+   8.  Beatriz
+   9.  Cómo encargar      ← franja oliva plena
+   10. Preguntas frecuentes / acordeón
+   11. Galería
+   12. CTA final          ← franja óxido plena
+   13. Footer y botón flotante
+   14. Responsive
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. VARIABLES
+   COMENTARIO REEMPLAZO: acá cambiás TODOS los colores de la web de una vez.
+   ========================================================================== */
+:root {
+  --fondo:   #F5F2EB;   /* fondo base de toda la página */
+  --tinta:   #2A2119;   /* títulos y párrafos sobre claro */
+  --oxido:   #591B04;   /* botones principales, enlaces, wordmark */
+  --oliva:   #615D42;   /* secciones de color pleno, footer */
+  --mostaza: #BF7A26;   /* único acento: hover, subrayados, badges */
+  --salvia:  #807A5E;   /* texto secundario, líneas divisorias */
+  --lana:    #E8EDF1;   /* fondo de tarjetas y bloques de apoyo */
+
+  --oscuro:  #1C1810;   /* fondo de la sección "El telar" */
+  --oscuro-2:#2A2418;   /* variante algo más clara, para las tarjetas de datos */
+
+  --wrap: 1140px;
+  --pad: 24px;
+  --radius: 14px;
+  --radius-lg: 24px;
+
+  --display: "Lora", Georgia, serif;
+  --body: "Work Sans", system-ui, -apple-system, sans-serif;
+}
+
+
+/* ==========================================================================
+   2. RESET Y BASE
+   ========================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 84px;
+}
+
+body {
+  margin: 0;
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--tinta);
+  background: var(--fondo);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* height:auto es imprescindible: las imágenes llevan width y height en el
+   HTML (para que la página no salte al cargar), y sin esta línea esa altura
+   fija le gana al aspect-ratio y las fotos salen deformadas. */
+img { max-width: 100%; height: auto; display: block; }
+
+a { color: inherit; }
+
+h1, h2, h3 {
+  font-family: var(--display);
+  font-weight: 600;
+  line-height: 1.15;
+  margin: 0;
+}
+
+p { margin: 0 0 1em; }
+
+ul { margin: 0; padding: 0; list-style: none; }
+
+:focus-visible {
+  outline: 3px solid var(--mostaza);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--oxido);
+  color: #fff;
+  padding: 12px 18px;
+  z-index: 200;
+}
+.skip-link:focus { left: 0; }
+
+
+/* ==========================================================================
+   3. UTILIDADES Y COMPONENTES COMPARTIDOS
+   ========================================================================== */
+.wrap {
+  width: 100%;
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding: 0 var(--pad);
+}
+
+/* Evita que una imagen agrande su columna y descuadre la grilla */
+.beatriz__grid > *,
+.info__grid > *,
+.footer__grid > * { min-width: 0; }
+
+.h2 {
+  font-size: clamp(1.9rem, 4.6vw, 2.7rem);
+  color: var(--oxido);
+  margin-bottom: 0.6em;
+}
+.h2--light { color: var(--fondo); text-align: center; }
+
+.lead { font-size: 1.1rem; }
+
+.section-head { max-width: 560px; margin: 0 auto 48px; text-align: center; }
+.section-head__text { color: var(--salvia); margin: 0; }
+
+/* --- Botones --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--body);
+  font-weight: 600;
+  font-size: .98rem;
+  padding: 14px 28px;
+  border-radius: 999px;
+  text-decoration: none;
+  border: 2px solid transparent;
+  transition: transform .18s ease, background-color .18s ease, color .18s ease;
+}
+.btn:hover { transform: translateY(-2px); }
+
+.btn--oxido { background: var(--oxido); color: #fff; }
+.btn--oxido:hover { background: #712408; }
+
+.btn--ghost { background: rgba(255,255,255,.12); color: #fff; border-color: rgba(255,255,255,.55); }
+.btn--ghost:hover { background: rgba(255,255,255,.24); }
+
+.btn--light { background: var(--fondo); color: var(--oxido); }
+.btn--light:hover { background: #fff; }
+
+.btn--big { padding: 18px 40px; font-size: 1.04rem; }
+
+/* --- Enlace de acción en texto --- */
+.link-cta {
+  display: inline-block;
+  font-weight: 600;
+  font-size: .93rem;
+  color: var(--oxido);
+  text-decoration: none;
+  border-bottom: 2px solid var(--mostaza);
+  padding-bottom: 2px;
+}
+.link-cta:hover { color: #712408; border-color: var(--oxido); }
+
+/* --- Lista con tilde --- */
+.ticks li {
+  position: relative;
+  padding-left: 26px;
+  margin-bottom: 10px;
+  color: var(--tinta);
+}
+.ticks li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 8px;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--mostaza);
+}
+
+
+/* ==========================================================================
+   4. HEADER Y NAVEGACIÓN
+   ========================================================================== */
+.site-header {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  z-index: 100;
+  background: rgba(245,242,235,.92);
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(42,33,25,.08);
+  transition: box-shadow .25s ease;
+}
+.site-header.is-stuck { box-shadow: 0 6px 22px rgba(42,33,25,.08); }
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 76px;
+}
+
+.brand {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.6rem;
+  color: var(--oxido);
+  text-decoration: none;
+}
+
+.nav { display: flex; align-items: center; gap: 28px; }
+.nav__link {
+  color: var(--tinta);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: .95rem;
+}
+.nav__link:hover { color: var(--mostaza); }
+.nav__cta { padding: 10px 20px; font-size: .9rem; }
+
+.burger {
+  display: none;
+  width: 46px; height: 46px;
+  background: none;
+  border: 1px solid rgba(42,33,25,.25);
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 0;
+}
+.burger span {
+  display: block;
+  width: 20px; height: 2px;
+  margin: 4px auto;
+  background: var(--tinta);
+  transition: transform .25s ease, opacity .25s ease;
+}
+.burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+
+/* ==========================================================================
+   5. HERO
+   ========================================================================== */
+.hero {
+  background: var(--oliva);
+  padding: 130px 0 80px;
+}
+
+.hero__inner {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.hero__photo { margin: 0; }
+.hero__photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: 42% 20%;
+  border-radius: var(--radius-lg);
+}
+
+.hero__content { position: relative; z-index: 2; }
+
+.hero__kicker {
+  color: #E4C99A;
+  font-size: .92rem;
+  letter-spacing: .04em;
+  margin-bottom: 14px;
+}
+
+.hero__title {
+  font-size: clamp(2.4rem, 7vw, 4.6rem);
+  color: #fff;
+  margin-bottom: 22px;
+}
+.hero__title .line { display: block; }
+
+.hero__text {
+  color: rgba(255,255,255,.86);
+  font-size: 1.1rem;
+  max-width: 42ch;
+  margin-bottom: 32px;
+}
+
+.hero__actions { display: flex; flex-wrap: wrap; gap: 14px; }
+
+/* Un solo momento orquestado al cargar la página */
+.hero__kicker, .hero__title .line, .hero__text, .hero__actions {
+  animation: rise .9s cubic-bezier(.22,.7,.3,1) both;
+}
+.hero__kicker         { animation-delay: .05s; }
+.hero__title .line:nth-child(1) { animation-delay: .13s; }
+.hero__title .line:nth-child(2) { animation-delay: .21s; }
+.hero__text            { animation-delay: .32s; }
+.hero__actions         { animation-delay: .42s; }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
+/* ==========================================================================
+   6. LAS PIEZAS
+   ========================================================================== */
+.piezas { padding: 100px 0; background: var(--fondo); }
+
+.piezas__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.pieza {
+  background: #fff;
+  border: 1px solid rgba(42,33,25,.08);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.pieza__img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  background: var(--lana);
+  transition: transform .5s cubic-bezier(.22,.7,.3,1);
+}
+.pieza:hover .pieza__img { transform: scale(1.04); }
+
+.pieza__body { padding: 22px 24px 26px; }
+
+.pieza__title { font-size: 1.35rem; color: var(--tinta); margin-bottom: 8px; }
+.pieza__text { color: var(--salvia); font-size: .95rem; margin-bottom: 8px; }
+.pieza__opts {
+  font-size: .84rem;
+  color: var(--oliva);
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+
+/* ==========================================================================
+   7. EL TELAR · ÚNICA SECCIÓN OSCURA
+   Es la sección más importante de la web. Corte limpio, no degradado.
+   ========================================================================== */
+.telar {
+  background: var(--oscuro);
+  color: var(--fondo);
+  padding: 120px 0;
+}
+
+.telar__inner { max-width: 760px; margin: 0 auto; text-align: center; }
+
+.telar__kicker {
+  color: var(--mostaza);
+  font-weight: 600;
+  letter-spacing: .04em;
+  margin-bottom: 16px;
+}
+
+.telar__title {
+  font-size: clamp(2rem, 5.4vw, 3.2rem);
+  margin-bottom: 30px;
+}
+
+.telar__lead {
+  color: #D9D4C4;
+  font-size: 1.12rem;
+  max-width: 56ch;
+  margin: 0 auto 52px;
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: rgba(191,122,38,.24);
+  border: 1px solid rgba(191,122,38,.24);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.facts__item { background: var(--oscuro-2); padding: 26px 20px; }
+.facts dt {
+  font-size: .82rem;
+  color: var(--salvia);
+  margin-bottom: 6px;
+}
+.facts dd {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.15rem;
+  color: var(--mostaza);
+}
+
+
+/* ==========================================================================
+   8. BEATRIZ
+   ========================================================================== */
+.beatriz { padding: 100px 0; background: var(--fondo); }
+
+.beatriz__grid {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.beatriz__photo { margin: 0; }
+.beatriz__photo img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  background: var(--lana);
+}
+
+.beatriz__body .lead { color: var(--tinta); }
+.beatriz__body .ticks { margin-top: 24px; }
+
+
+/* ==========================================================================
+   9. CÓMO ENCARGAR · FRANJA OLIVA PLENA
+   ========================================================================== */
+.pasos { background: var(--oliva); color: var(--fondo); padding: 96px 0; }
+.pasos__inner { text-align: center; }
+
+.pasos__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  max-width: 760px;
+  margin: 0 auto 48px;
+}
+
+.paso__num {
+  display: block;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 2.6rem;
+  color: var(--mostaza);
+  margin-bottom: 10px;
+}
+.paso__text { color: var(--fondo); margin: 0; font-size: 1.02rem; }
+
+
+/* ==========================================================================
+   10. PREGUNTAS FRECUENTES / ACORDEÓN
+   ========================================================================== */
+.info { padding: 100px 0; background: var(--fondo); }
+
+.info__grid {
+  display: grid;
+  grid-template-columns: 0.75fr 1.25fr;
+  gap: 56px;
+  align-items: start;
+}
+.info__intro p { color: var(--salvia); }
+
+.accordion { border-top: 1px solid rgba(128,122,94,.3); }
+.acc { border-bottom: 1px solid rgba(128,122,94,.3); }
+
+.acc__head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--oxido);
+  text-align: left;
+}
+.acc__head:hover { color: #712408; }
+
+.acc__icon { position: relative; width: 18px; height: 18px; flex: none; }
+.acc__icon::before,
+.acc__icon::after {
+  content: "";
+  position: absolute;
+  background: var(--mostaza);
+  transition: transform .3s ease, opacity .3s ease;
+}
+.acc__icon::before { top: 8px; left: 0; width: 18px; height: 2px; }
+.acc__icon::after  { top: 0; left: 8px; width: 2px; height: 18px; }
+.acc__head[aria-expanded="true"] .acc__icon::after { transform: rotate(90deg); opacity: 0; }
+
+.acc__panel { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
+.acc__inner { padding: 0 0 22px; color: var(--salvia); }
+.acc__inner p:last-child { margin-bottom: 0; }
+
+
+/* ==========================================================================
+   11. GALERÍA
+   ========================================================================== */
+.gallery { padding: 100px 0; background: var(--fondo); }
+.gallery__title { text-align: center; margin-bottom: 40px; }
+
+.gallery__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  align-items: start;
+}
+.gallery__grid img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: var(--radius);
+  background: var(--lana);
+  transition: transform .5s cubic-bezier(.22,.7,.3,1);
+}
+.gallery__grid img:hover { transform: scale(1.03); }
+.gallery__grid { grid-auto-flow: dense; }
+.gallery__grid img.is-feature { grid-column: span 2; grid-row: span 2; }
+
+
+/* ==========================================================================
+   12. CTA FINAL · FRANJA ÓXIDO PLENA
+   Es la franja de mayor contraste de toda la página.
+   ========================================================================== */
+.cta { background: var(--oxido); color: var(--fondo); padding: 96px 0; }
+.cta__inner { text-align: center; }
+.cta__title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin-bottom: 16px;
+}
+.cta__text {
+  color: rgba(245,242,235,.88);
+  max-width: 44ch;
+  margin: 0 auto 32px;
+}
+
+
+/* ==========================================================================
+   13. FOOTER Y BOTÓN FLOTANTE
+   ========================================================================== */
+.site-footer { background: var(--oliva); color: var(--fondo); padding: 72px 0 28px; position: relative; }
+
+/* Separador superior con el patrón de urdimbre a 45° */
+.site-footer::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 6px;
+  background: repeating-linear-gradient(45deg,
+    rgba(245,242,235,.35) 0 6px,
+    transparent 6px 12px);
+}
+
+.footer__grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 44px;
+}
+
+.footer__name {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.5rem;
+  margin: 0 0 10px;
+}
+.footer__blurb { color: rgba(245,242,235,.72); max-width: 30ch; }
+
+.footer__col { display: flex; flex-direction: column; gap: 10px; }
+.footer__head {
+  font-size: .78rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--mostaza);
+  margin-bottom: 4px;
+  font-family: var(--body);
+  font-weight: 600;
+}
+.footer__col a { color: rgba(245,242,235,.82); text-decoration: none; font-size: .95rem; }
+.footer__col a:hover { color: #fff; }
+.footer__plain { color: rgba(245,242,235,.6); font-size: .9rem; margin: 4px 0 0; }
+
+.footer__base {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 52px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(245,242,235,.16);
+  color: rgba(245,242,235,.5);
+  font-size: .86rem;
+}
+.footer__base p { margin: 0; }
+
+.wa {
+  position: fixed;
+  right: 22px; bottom: 22px;
+  z-index: 90;
+  width: 58px; height: 58px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #25D366;
+  color: #fff;
+  box-shadow: 0 8px 22px rgba(0,0,0,.24);
+  transition: transform .2s ease;
+}
+.wa:hover { transform: scale(1.08); }
+
+
+/* ==========================================================================
+   14. RESPONSIVE
+   ========================================================================== */
+@media (max-width: 900px) {
+
+  .burger { display: block; }
+
+  .nav {
+    position: fixed;
+    top: 76px; left: 0;
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    background: var(--fondo);
+    padding: 0 var(--pad);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .3s ease, padding .3s ease;
+    border-top: 1px solid rgba(42,33,25,.08);
+  }
+  .nav.is-open { max-height: 340px; padding: 8px var(--pad) 22px; }
+
+  .nav__link { padding: 14px 0; border-bottom: 1px solid rgba(42,33,25,.08); }
+  .nav__cta { margin-top: 16px; text-align: center; }
+
+  .hero__inner { grid-template-columns: 1fr; gap: 36px; }
+
+  .piezas__grid { grid-template-columns: 1fr 1fr; }
+
+  .beatriz__grid,
+  .info__grid,
+  .footer__grid { grid-template-columns: 1fr; gap: 34px; }
+
+  .pasos__grid { grid-template-columns: 1fr; gap: 28px; }
+
+  .facts { grid-template-columns: 1fr; }
+
+  .gallery__grid { grid-template-columns: 1fr 1fr; }
+  .gallery__grid img.is-feature { grid-row: span 1; }
+
+  .piezas, .beatriz, .info, .gallery { padding: 68px 0; }
+  .telar, .pasos { padding: 80px 0; }
+}
+
+@media (max-width: 560px) {
+  .piezas__grid { grid-template-columns: 1fr; }
+  .hero { padding: 104px 0 56px; }
+  .hero__actions .btn { width: 100%; }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
